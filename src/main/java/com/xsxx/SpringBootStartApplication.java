@@ -4,7 +4,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
- *
+ * 添加war
  */
 public class SpringBootStartApplication  extends SpringBootServletInitializer {
 
