@@ -1,0 +1,184 @@
+/* ctable */
+@ctableGray:#f5f5f5;
+.ctable table,
+table.ctable {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+}
+
+.ctable {
+    line-height: 21px;
+    clear: both;
+    overflow: hidden;
+    background-color: #fff;
+    td,
+    th {
+        padding: 8px;
+        border: solid 1px #ddd;
+        overflow: hidden;
+    }
+    th {
+        color: #333;
+        font-size: 13px;
+        background-color: @ctableGray;
+        font-weight: normal;
+        text-shadow: 1px 1px 0px #FFF;
+        box-shadow: inset 1px 1px 0px #FFF;
+    }
+    .scroll::-webkit-scrollbar {
+        background: @ctableGray;
+    }
+    //line
+    .line {
+        padding: 8px;
+        margin: -1px;
+        border-top: 1px solid #ddd;
+    }
+    .odd {
+        background: #fdfdfd;
+    }
+    .ctable-colgroup {
+        padding: 3px 8px;
+    }
+    .show-on-hover{
+        display:none;
+    }
+    .hide-on-hover{
+        display:inline;
+    }
+    .ctable-hover {
+        background: #ffffcb;
+        .vhide {
+            visibility: visible;
+        }
+        .show-on-hover{
+            display:inline;
+        }
+        .hide-on-hover{
+            display:none;
+        }
+    }
+    .chandler {
+        &:extend(.user-select);
+        padding: 0;
+        font-size: 0;
+        width: 10px;
+    }
+    .ctable-selected {
+        background-color: #039ACC;
+        color: #fff;
+        td {
+            box-shadow: none;
+            border-color: #039ACC;
+        }
+        a {
+            color: #fff;
+        }
+    }
+}
+.ctable-head,
+.ctable-body {
+    border: solid 1px #ddd;
+    position: relative;
+    overflow: hidden;
+    th,
+    td {
+        border-width: 0 1px 1px 0;
+    }
+    table {
+        margin-bottom: -1px;
+    }
+}
+
+.ctable-head {
+    z-index: 1;
+    margin-bottom: -1px;
+    background-color: @ctableGray;
+    & th:last-child {
+        border-right-width: 0;
+    }
+}
+
+.ctable-head-inner {
+    overflow: hidden;
+}
+
+.ctable-body {
+    background-size: 50px 76px;
+    background-image: linear-gradient(transparent 50%, #fcfcfc 50%, #fcfcfc);
+    .chandler {
+        background: @ctableGray url(img/handler.png) repeat-y;
+        cursor: move;
+    }
+    .ctable-lines{
+        padding:0;
+    }
+    table{
+        background: #fff;
+    }
+    .ui-sortable-helper td {
+        border-width: 1px !important;
+    }
+    & td:last-child {
+        border-right-width: 0;
+    }
+}
+
+.ctable-foot {
+    height: 30px;
+    overflow: hidden;
+    line-height: 30px;
+    position: relative;
+    z-index: 10;
+    .pager {
+        float: right;
+    }
+}
+
+.ctable-status {
+    float: left;
+    padding: 0 5px;
+}
+
+.ctable-checkall,
+.ctable-checkbox {
+    //middle的时候会影响td 高度
+    vertical-align: bottom;
+}
+
+.ctable-shadow {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.ctable-fullwidth thead th:last-child,
+.ctable-fullwidth tbody td:last-child {
+    border-right: solid 1px #ddd;
+}
+.ctable-countswitch{
+    background: #F7F7F7;
+    border-width: 0 1px;
+    border-radius: 0;
+    border-color: #ddd;
+}
+.ctable-loading{
+    .ctalbe-body{
+        background: url(img/loading-m.gif) no-repeat center center;
+    }
+    .ctable-body-inner{
+        opacity: .2;
+        pointer-events: none;
+    }
+}
+/* .ctable-frozen {
+    .ctable-body{
+        overflow: hidden !important;
+    }
+    .ctable-foot .pager {
+        display: none;
+    }
+    & thead th:last-child,& tbody td:last-child{
+        border-right-width:0;
+    }
+} */

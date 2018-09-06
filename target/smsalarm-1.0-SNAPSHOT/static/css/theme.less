@@ -1,0 +1,121 @@
+@import 'var.less';
+
+/* theme */
+
+
+fieldset {
+    border-radius: @radius;
+    border-color: #ddd;
+    legend {
+        padding: 0 5px;
+    }
+    p {
+        margin: .5em 0 0;
+    }
+}
+/* input checkbox radio */
+input[type=checkbox],input[type=radio] {
+    width: 18px;
+    height: 18px;
+    line-height: 1.4;
+    font-size: 12px;
+    padding:0 !important;
+    // line-height: 18px !important;
+    -webkit-appearance: none;
+    border: solid 1px #bfbfbf;
+    border-top-color: #aaa;
+    // IE6-10系列去掉border
+    border:none\9;
+    background: #fff;
+    //IE7
+    *width:24px;
+    *height: 24px;
+    border-radius: @radius;
+    outline: none;
+    &:hover {
+        border-color: #aaa;
+    }
+    &:active {
+        background-color: #ddd;
+    }
+    &:before {
+        content: '\e62e';
+        color: @safeColor;
+        margin-left:2px;
+        font-family: icomoon;
+        border-radius: 20px;
+        visibility:hidden;
+    }
+    &:checked:before {
+    	visibility: visible;
+    }
+    &[disabled] {
+        background: #f4f4f4;
+        *background: none;
+        cursor: not-allowed;
+    }
+    &[disabled]:before{
+        color: #aaa;
+    }
+}
+input[type=checkbox]:checked{
+    border-color:@safeColor;
+}
+input[type=radio]{
+    border-radius: 20px;
+    &:checked:before{
+        color: #444;
+        background: #444;
+    }
+    &[disabled]:before{
+        background: #bbb;
+        color: #bbb;
+    }
+}
+/* tabs */
+.tabs-tiny {
+    border-radius: 4px;
+    .tab {
+    	border:solid 1px #ddd;
+        padding: 3px 3px 0;
+        background-color: #FBFDFF;
+        border-radius: 4px 4px 0 0;
+        a {
+            padding: 5px 15px;
+        }
+    }
+}
+
+
+.sidebar {
+    background: #f5f5f5;
+}
+/* scroll  */
+
+.noscroll, .noscroll body {
+    height: 100%;
+    overflow: hidden;
+    .sidebar, .mainbody {
+        height: 100%;
+    }
+}
+//https://css-tricks.com/custom-scrollbars-in-webkit/
+.scroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    min-height: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+    border-radius: 5px;
+}
+.scroll::-webkit-scrollbar-button {
+    display: none;
+}
+.scroll::-webkit-scrollbar-corner {
+    background: transparent;
+}
+// .scroll::-webkit-scrollbar-track {}
