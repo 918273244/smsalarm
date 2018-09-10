@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xsxx.mapper.PlatformInfoMapper">
+	<resultMap type="com.xsxx.pojo.PlatformInfo" id="platformMap">
+		<result property="id" jdbcType="INTEGER" column="id"/>
+		<result property="platform_url" jdbcType="VARCHAR" column="platformUrl"/>
+		<result property="alarm_url" jdbcType="VARCHAR" column="alarmUrl"/>
+		<result property="pname" jdbcType="VARCHAR" column="pname"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,platform_url,alarm_url,pname
+	</sql>
+
+	<select id="findByPage" resultMap="platformMap">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM platformInfo
+	</select>
+
+
+	<select id="findById" resultMap="platformMap">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM platformInfo WHERE id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="addPlatform" parameterType="com.xsxx.pojo.PlatformInfo">
+		insert into platformInfo
+		 (platform_url, alarm_url, pname)
+		 VALUES
+		(#{platformUrl}, #{alarmUrl}, #{pname})
+	</insert>
+
+	<update id="updatePlatform" parameterType="com.xsxx.pojo.PlatformInfo">
+		update platformInfo
+		<set>
+			<if test="platform_url != null">
+				platform_url = #{platformUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="alarm_url != null">
+				alarm_url = #{alarmUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				pname = #{pname,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>

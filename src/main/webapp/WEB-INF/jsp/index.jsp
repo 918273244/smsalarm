@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="${ctx}static/css/maroco.css">
     <link rel="stylesheet" href="${ctx}static/cloud/home.css">
     <%--select2--%>
+    <script src="${ctx}static/js/vendor/jquery.js"></script>
+    <script src="${ctx}static/js/vendor/sea.js"></script>
+    <script src="${ctx}static/js/vendor/seajs-css.js"></script>
+    <script src="${ctx}static/js/vendor/seajs-text.js"></script>
     <link rel="stylesheet" href="${ctx}static/js/vendor/select2/css/select2.min.css">
     <script src="${ctx}static/js/vendor/select2/js/select2.full.min.js"></script>
     <script src="${ctx}static/js/vendor/select2/js/i18n/zh-CN.js"></script>
