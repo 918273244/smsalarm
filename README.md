@@ -5,3 +5,4 @@
 4、pagehelper分页插件<br/>
 5、spring boot 整合junit测试 SpringBootTest<br/>
 6、ServletContextListener在Springboot中的使用<br/>
+7、获取上下文代码 ApplicationContextAware<br>
