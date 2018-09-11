@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface WhiteIpService {
 
+    String name = "whiteIpService";
+
     void addWhiteIp(WhiteIp whiteIp) throws ServiceException;
 
     /**
@@ -24,5 +26,7 @@ public interface WhiteIpService {
     void updateWhiteIp(WhiteIp whiteIp) throws ServiceException;
 
     WhiteIp load(Integer id);
+
+    List<WhiteIp> getWhiteIpList();
 
 }

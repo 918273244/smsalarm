@@ -34,6 +34,10 @@
 		WHERE username=#{username}
 	</select>
 
+	<select id="findAll" resultMap="userMap">
+		SELECT uid,username,password FROM user
+	</select>
+
 
 
 </mapper>
