@@ -1,14 +1,15 @@
 package com.xsxx.mapper;
 
+import com.github.pagehelper.Page;
 import com.xsxx.pojo.PlatformInfo;
 
 import java.util.List;
 
-public interface PlatformInfoMapper {
+public interface PlatformInfoMapper extends BaseMapper<PlatformInfo, Integer>{
 
     void addPlatform(PlatformInfo platformInfo);
 
-    List<PlatformInfo> findByPage();
+    Page<PlatformInfo> findByPage();
 
     PlatformInfo findById(Integer id);
 

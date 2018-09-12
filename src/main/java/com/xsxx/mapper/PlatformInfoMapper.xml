@@ -5,8 +5,8 @@
 <mapper namespace="com.xsxx.mapper.PlatformInfoMapper">
 	<resultMap type="com.xsxx.pojo.PlatformInfo" id="platformMap">
 		<result property="id" jdbcType="INTEGER" column="id"/>
-		<result property="platform_url" jdbcType="VARCHAR" column="platformUrl"/>
-		<result property="alarm_url" jdbcType="VARCHAR" column="alarmUrl"/>
+		<result property="platformUrl" jdbcType="VARCHAR" column="platform_url"/>
+		<result property="alarmUrl" jdbcType="VARCHAR" column="alarm_url"/>
 		<result property="pname" jdbcType="VARCHAR" column="pname"/>
 	</resultMap>
 
@@ -37,13 +37,13 @@
 	<update id="updatePlatform" parameterType="com.xsxx.pojo.PlatformInfo">
 		update platformInfo
 		<set>
-			<if test="platform_url != null">
+			<if test="platformUrl != null">
 				platform_url = #{platformUrl,jdbcType=VARCHAR},
 			</if>
-			<if test="alarm_url != null">
+			<if test="alarmUrl != null">
 				alarm_url = #{alarmUrl,jdbcType=VARCHAR},
 			</if>
-			<if test="name != null">
+			<if test="pname != null">
 				pname = #{pname,jdbcType=VARCHAR},
 			</if>
 		</set>
