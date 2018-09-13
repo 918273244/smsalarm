@@ -5,49 +5,67 @@ import com.github.pagehelper.PageHelper;
 import com.xsxx.exception.ServiceException;
 import com.xsxx.mapper.PlatformInfoMapper;
 import com.xsxx.pojo.PlatformInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class PlatformInfoServiceImpl implements PlatformInfoService {
+public class PlatformInfoServiceImpl implements PlatformInfoService  , ApplicationListener<ContextRefreshedEvent> {
+
+    private static Logger logger = LoggerFactory.getLogger(("alarmfile"));
 
     @Autowired
     PlatformInfoMapper platformInfoMapper;
 
+    private List<PlatformInfo> platformInfos;
+    private Map<String, PlatformInfo> platformInfoMap;
+
     @Override
     public void addPlatform(PlatformInfo platformInfo) {
         try {
-        platformInfoMapper.addPlatform(platformInfo);
+            platformInfoMapper.addPlatform(platformInfo);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
         }
     }
 
     @Override
-    public Page<PlatformInfo> findByPage(int pageNo, int pageSize) {
+    public List<PlatformInfo> findByPage(int pageNo, int pageSize) {
         try {
-        PageHelper.startPage(pageNo, pageSize);
-        return platformInfoMapper.findByPage();
-    }catch (Exception e){
-        throw new ServiceException(e.getMessage());
-    }
+            Thread.sleep(10000);
+            List<PlatformInfo> list = new ArrayList<>();
+            for (PlatformInfo value : platformInfoMap.values()) {
+                list.add(value);
+            }
+
+//            list.subList(pageNo, pageNo+pageSize);
+            return list;
+        }catch (Exception e){
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
     public List<PlatformInfo> findAll() {
         try {
-        return platformInfoMapper.findByPage();
-    }catch (Exception e){
-        throw new ServiceException(e.getMessage());
-    }
+            return platformInfos;
+        }catch (Exception e){
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
     public PlatformInfo findById(Integer id) {
         try {
-        return platformInfoMapper.findById(id);
+            return platformInfoMapper.findById(id);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
         }
@@ -56,9 +74,28 @@ public class PlatformInfoServiceImpl implements PlatformInfoService {
     @Override
     public void updatePlatform(PlatformInfo platformInfo) {
         try {
-        platformInfoMapper.updatePlatform(platformInfo);
-    }catch (Exception e){
-        throw new ServiceException(e.getMessage());
+            platformInfoMapper.updatePlatform(platformInfo);
+        }catch (Exception e){
+            throw new ServiceException(e.getMessage());
+        }
     }
+
+    @Override
+    public Map<String, PlatformInfo> getPlatformMap() {
+        return platformInfoMap;
+    }
+
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        try {
+            platformInfos = platformInfoMapper.findByPage();
+            platformInfoMap = new ConcurrentHashMap<>();
+            for (PlatformInfo p:platformInfos) {
+                platformInfoMap.put(p.getPlatformUrl(), p);
+            }
+        }catch (Exception e){
+            logger.error("获取平台列表错误: "+e.getMessage());
+        }
     }
 }
