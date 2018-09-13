@@ -27,7 +27,7 @@ import java.util.concurrent.Future;
 
 @Component
 @EnableScheduling
-//@Async
+@Async
 public class AlarmTask {
 
     private static Logger logger = LoggerFactory.getLogger(("alarmfile"));
@@ -37,7 +37,7 @@ public class AlarmTask {
     PlatformInfoService platformInfoService;
 
     /**第一次延迟5秒后执行，之后按fixedDelay的规则每5秒执行一次*/
-    @Scheduled(initialDelay = 2000, fixedDelay = 5000)
+    @Scheduled(initialDelay = 5000, fixedDelay = 5000)
     public void task() throws InterruptedException, ExecutionException, IOException {
         List<PlatformInfo> platformInfoList = platformInfoService.findAll();
 
