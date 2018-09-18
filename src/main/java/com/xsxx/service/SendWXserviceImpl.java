@@ -75,8 +75,8 @@ public class SendWXserviceImpl implements SendWXservice {
     /**
      * 设置 -> 权限管理
      */
-    public final static  String cropId = "wx8e1c59bef7d57d5d";
-    public final static String secret = "rP2a2VJjhDr0wSVzumH-cbAX9xFsbP7CIHIEBQLnsPBfCu3jzNS3I6nU53LMaucs";
+    public final static  String cropId = "";
+    public final static String secret = "";
 
     /**
      * 获取微信token
