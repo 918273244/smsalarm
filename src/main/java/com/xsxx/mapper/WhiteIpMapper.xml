@@ -27,6 +27,12 @@
 		FROM whiteIp
 	</select>
 
+	<select id="getWhiteIps" resultMap="whiteIpMap">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM whiteIp
+	</select>
+
 	<select id="load" resultMap="whiteIpMap">
 		SELECT
 		<include refid="Base_Column_List"/>

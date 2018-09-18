@@ -29,4 +29,6 @@ public interface WhiteIpService {
 
     List<WhiteIp> getWhiteIpList();
 
+    List<String> getWhiteIps();
+
 }

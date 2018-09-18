@@ -4,12 +4,11 @@ import com.xsxx.constants.PlatformStatus;
 import com.xsxx.http.asyHttpClient.AsynHttpClientFactory;
 import com.xsxx.pojo.PlatformInfo;
 import com.xsxx.service.PlatformInfoService;
-import org.apache.http.HttpEntity;
+import com.xsxx.service.SendWXservice;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 @Component
 @EnableScheduling
@@ -35,6 +32,12 @@ public class AlarmTask {
 
     @Autowired
     PlatformInfoService platformInfoService;
+
+    @Autowired
+    SendWXservice sendWXservice;
+
+    //报警队列
+    ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<>(100);
 
     /**第一次延迟5秒后执行，之后按fixedDelay的规则每5秒执行一次*/
     @Scheduled(initialDelay = 5000, fixedDelay = 5000)
@@ -90,41 +93,44 @@ public class AlarmTask {
 
                 @Override
                 public void failed(Exception excptn) {
-                    latch.countDown();
-                    PlatformInfo platformInfo =  map.get(request.getURI().toString());
-                    if(platformInfo != null){
-                        platformInfo.setStatus(PlatformStatus.ERROR.getStatus());
+                    try{
+                        latch.countDown();
+                        PlatformInfo platformInfo =  map.get(request.getURI().toString());
+                        if(platformInfo != null){
+                            //添加平台号
+                            queue.add(platformInfo.getPname());
+                            platformInfo.setStatus(PlatformStatus.ERROR.getStatus());
+                        }
+                    }catch (Exception e){
+                        logger.error("请求连接失败："+e.getMessage());
                     }
+
                 }
 
                 @Override
                 public void cancelled() {
-                    latch.countDown();
-                    PlatformInfo platformInfo =  map.get(request.getURI().toString());
-                    if(platformInfo != null){
-                        platformInfo.setStatus(PlatformStatus.ERROR.getStatus());
+                    try{
+                        latch.countDown();
+                        PlatformInfo platformInfo =  map.get(request.getURI().toString());
+                        if(platformInfo != null){
+                            queue.add(platformInfo.getPname());
+                            platformInfo.setStatus(PlatformStatus.ERROR.getStatus());
+
+                        }
+                    }catch (Exception e){
+                        logger.error("请求没连接成功："+e.getMessage());
                     }
+
                 }
 
             });
-           /* HttpResponse response = future.get();
-            PlatformInfo platformInfo =  map.get(request.getURI().toString());
-            if(response.getStatusLine().getStatusCode() == 200){
-                if(platformInfo != null){
-                    platformInfo.setStatus(PlatformStatus.SUCCESS.getStatus());
-                }
-            };*/
-            request.releaseConnection();
         }
-
         try {
             latch.await();
         } catch (Exception ex) {
-            ex.printStackTrace();
             logger.error("定时任务出错："+ex.getMessage());
         }
-       /*
-        finally{
+       /* finally{
             try {
                 httpClient.close();
             }
@@ -132,14 +138,26 @@ public class AlarmTask {
                 logger.error("定时任务出错："+ex.getMessage());
             }
         }*/
-        /*try {
-            httpClient.close();
-        }
-        catch (IOException ex) {
-            logger.error("定时任务出错："+ex.getMessage());
-        }*/
 
     }
+
+
+    @Scheduled(initialDelay = 5000, fixedDelay = 1000)
+    public void take(){
+        if(queue.size()>0){
+            String pname = queue.poll();
+            sendWXservice.sendWXmsg(pname,pname,pname);
+            logger.error(pname+" 平台断开");
+            try {
+                //睡2秒
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 
 
 }

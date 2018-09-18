@@ -13,9 +13,11 @@ public interface WhiteIpMapper extends BaseMapper<WhiteIp, Integer>{
      * 分页查询
      * @return
      */
-    Page<WhiteIp> findByPage();
+        Page<WhiteIp> findByPage();
 
     List<WhiteIp> findAll();
 
     void updateWhiteIp(WhiteIp whiteIp);
+
+    List<String> getWhiteIps();
 }
