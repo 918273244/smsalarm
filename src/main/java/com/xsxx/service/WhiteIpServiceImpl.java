@@ -82,6 +82,15 @@ public class WhiteIpServiceImpl implements WhiteIpService , ApplicationListener<
         return whiteIpList;
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        try {
+            whiteIpMapper.delete(id);
+        }catch (Exception e){
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
 
     /**
      * 初始化以后得到所有白名单

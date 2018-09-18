@@ -85,6 +85,15 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
         return platformInfoMap;
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        try {
+            platformInfoMapper.delete(id);
+        }catch (Exception e){
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {

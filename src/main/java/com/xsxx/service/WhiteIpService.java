@@ -31,4 +31,6 @@ public interface WhiteIpService {
 
     List<String> getWhiteIps();
 
+    void deleteById(Integer id);
+
 }

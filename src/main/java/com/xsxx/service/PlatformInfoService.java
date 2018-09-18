@@ -21,4 +21,8 @@ public interface PlatformInfoService {
 
     Map<String, PlatformInfo> getPlatformMap();
 
+    void deleteById(Integer id);
+
+
+
 }

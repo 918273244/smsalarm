@@ -1,10 +1,9 @@
 package com.xsxx.controller;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
 import com.xsxx.entity.JSONResult;
+import com.xsxx.pojo.PlatformInfo;
 import com.xsxx.pojo.WhiteIp;
-import com.xsxx.service.WhiteIpService;
+import com.xsxx.service.PlatformInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,31 +13,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * 白名单
+ * @Auther: Steven 孙
+ * @Date: 2018/9/18 15:38
+ * @Description: 平台基础信息
  */
 @Controller
-@RequestMapping("whiteIp")
-public class WhiteIpController extends BaseController{
+@RequestMapping("platform")
+public class PlatformController extends BaseController {
 
     @Autowired
-    WhiteIpService whiteIpService;
+    PlatformInfoService platformInfoService;
 
     @RequestMapping("list")
-    public String whiteView(){
-        return "whiteIp/list";
+    public String platformView(){
+        return "platform/list";
     }
 
-    /**
-     * 获取所有数据
-     * @param pageNo
-     * @param pageSize
-     * @return
-     */
     @RequestMapping("get")
     @ResponseBody
     public JSONResult get(int pageNo, int pageSize){
         try{
-            Page<WhiteIp> list =  whiteIpService.findByPage(pageNo, pageSize);
+            List<PlatformInfo> list =  platformInfoService.findByPage(pageNo, pageSize);
             return ajaxSuccess(list);
         }catch (Exception e){
             return ajaxFail(e.getMessage());
@@ -46,15 +41,15 @@ public class WhiteIpController extends BaseController{
     }
 
     /**
-     * 添加白名单
-     * @param whiteIp
+     * 添加平台信息
+     * @param platformInfo
      * @return
      */
-    @RequestMapping("addWhiteIp")
+    @RequestMapping("addPlatform")
     @ResponseBody
-    public JSONResult addWhiteIp(WhiteIp whiteIp){
-        try {
-            whiteIpService.addWhiteIp(whiteIp);
+    public JSONResult addPlatform(PlatformInfo platformInfo){
+        try{
+            platformInfoService.addPlatform(platformInfo);
         }catch (Exception e){
             return ajaxFail(e.getMessage());
         }
@@ -62,15 +57,15 @@ public class WhiteIpController extends BaseController{
     }
 
     /**
-     * 更新白名单
-     * @param whiteIp
+     * 更新平台信息
+     * @param platformInfo
      * @return
      */
-    @RequestMapping("updateWhiteIp")
+    @RequestMapping("update")
     @ResponseBody
-    public JSONResult updateWhiteIp(WhiteIp whiteIp){
+    public JSONResult update(PlatformInfo platformInfo){
         try {
-            whiteIpService.updateWhiteIp(whiteIp);
+            platformInfoService.updatePlatform(platformInfo);
         }catch (Exception e){
             return ajaxFail(e.getMessage());
         }
@@ -78,22 +73,21 @@ public class WhiteIpController extends BaseController{
     }
 
     /**
-     * 获取白名单基本信息
+     * 获取基本信息
      * @param id
      * @return
      */
-    @RequestMapping("whiteIpInfo")
+    @RequestMapping("platformInfo")
     @ResponseBody
-    public JSONResult whiteIpInfo(Integer id){
-        WhiteIp whiteIp;
+    public JSONResult platformInfo(Integer id){
+        PlatformInfo platformInfo;
         try {
-            whiteIp = whiteIpService.load(id);
+            platformInfo = platformInfoService.findById(id);
         }catch (Exception e){
             return ajaxFail(e.getMessage());
         }
-        return ajaxSuccess(whiteIp);
+        return ajaxSuccess(platformInfo);
     }
-
 
     /**
      * 删除功能
@@ -103,13 +97,12 @@ public class WhiteIpController extends BaseController{
     @RequestMapping(value = "delete",method = RequestMethod.POST)
     public  JSONResult deleteById(Integer id){
         try{
-            whiteIpService.deleteById(id);
+            platformInfoService.deleteById(id);
         }catch (Exception e){
             return ajaxFail(e.getMessage());
         }
         return ajaxSuccess();
     }
-
 
 
 }
