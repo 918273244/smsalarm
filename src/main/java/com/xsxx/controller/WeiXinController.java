@@ -379,7 +379,7 @@ public class WeiXinController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "send", method = RequestMethod.POST)
+    @RequestMapping(value = "send", method = RequestMethod.GET)
     @ResponseBody
     public String postToWeixin(@RequestParam(value = "code", required = false) Integer code,
                                @RequestParam(value = "content", required = false) String content,

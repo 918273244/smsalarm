@@ -28,6 +28,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/include.inc.jsp*", "anon");
         filterChainDefinitionMap.put("/loginUser", "anon");
         filterChainDefinitionMap.put("/logOut*","anon");
+        filterChainDefinitionMap.put("/weixin/*","anon");//微信发送
 //        filterChainDefinitionMap.put("/login","anon");
         filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
         filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问

@@ -11,7 +11,7 @@ import java.util.concurrent.Executor;
 @EnableAsync
 public class AsyncConfig {
 
-/*
+/**
 此处成员变量应该使用@Value从配置中读取
 */
     private int corePoolSize = 10;
