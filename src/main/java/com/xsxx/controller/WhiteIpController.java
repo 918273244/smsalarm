@@ -50,7 +50,7 @@ public class WhiteIpController extends BaseController{
      * @param whiteIp
      * @return
      */
-    @RequestMapping("addWhiteIp")
+    @RequestMapping(value = "addWhiteIp",method = RequestMethod.POST)
     @ResponseBody
     public JSONResult addWhiteIp(WhiteIp whiteIp){
         try {
@@ -66,7 +66,7 @@ public class WhiteIpController extends BaseController{
      * @param whiteIp
      * @return
      */
-    @RequestMapping("updateWhiteIp")
+    @RequestMapping(value = "updateWhiteIp",method = RequestMethod.POST)
     @ResponseBody
     public JSONResult updateWhiteIp(WhiteIp whiteIp){
         try {
@@ -82,7 +82,7 @@ public class WhiteIpController extends BaseController{
      * @param id
      * @return
      */
-    @RequestMapping("whiteIpInfo")
+    @RequestMapping(value = "whiteIpInfo",method = RequestMethod.POST)
     @ResponseBody
     public JSONResult whiteIpInfo(Integer id){
         WhiteIp whiteIp;

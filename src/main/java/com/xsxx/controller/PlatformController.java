@@ -45,7 +45,7 @@ public class PlatformController extends BaseController {
      * @param platformInfo
      * @return
      */
-    @RequestMapping("addPlatform")
+    @RequestMapping(value = "addPlatform",method = RequestMethod.POST)
     @ResponseBody
     public JSONResult addPlatform(PlatformInfo platformInfo){
         try{
@@ -61,7 +61,7 @@ public class PlatformController extends BaseController {
      * @param platformInfo
      * @return
      */
-    @RequestMapping("update")
+    @RequestMapping(value = "update",method = RequestMethod.POST)
     @ResponseBody
     public JSONResult update(PlatformInfo platformInfo){
         try {
@@ -77,7 +77,7 @@ public class PlatformController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping("platformInfo")
+    @RequestMapping(value = "platformInfo",method = RequestMethod.POST)
     @ResponseBody
     public JSONResult platformInfo(Integer id){
         PlatformInfo platformInfo;
