@@ -1,3 +1,9 @@
+DROP database IF EXISTS `alarm`;
+
+create database alarm;
+
+use alarm;
+
 CREATE TABLE `module` (
   `mid` int(11) NOT NULL AUTO_INCREMENT,
   `mname` varchar(255) DEFAULT NULL,
@@ -70,4 +76,31 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` VALUES ('1', '1');
 INSERT INTO `user_role` VALUES ('2', '2');
 
+-- ----------------------------
+-- whiteip 白名单
+-- ----------------------------
+CREATE TABLE
+    whiteip
+    (
+        id INT NOT NULL AUTO_INCREMENT,
+        ip VARCHAR(200),
+        created TIMESTAMP NULL,
+        wname VARCHAR(100),
+        PRIMARY KEY (id)
+    )
+    ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- platforminfo 平台信息
+-- ----------------------------
+    CREATE TABLE
+    platforminfo
+    (
+        id INT NOT NULL AUTO_INCREMENT,
+        platform_url VARCHAR(200),
+        alarm_url VARCHAR(200),
+        pname VARCHAR(100),
+        PRIMARY KEY (id)
+    )
+    ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
