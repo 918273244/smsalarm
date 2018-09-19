@@ -54,6 +54,17 @@ CREATE TABLE `module_role` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+
+CREATE TABLE
+    USER
+    (
+        uid INT NOT NULL AUTO_INCREMENT,
+        username VARCHAR(255),
+        password VARCHAR(255),
+        PRIMARY KEY (uid)
+    )
+    ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 INSERT INTO `user` VALUES ('1', 'admin', 'admin123');
 INSERT INTO `user` VALUES ('2', 'steven', 'steven123');
 
