@@ -51,6 +51,12 @@ CREATE TABLE `module_role` (
   CONSTRAINT `rid` FOREIGN KEY (`rid`) REFERENCES `role` (`rid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `module_role` VALUES ('1', '1');
+INSERT INTO `module_role` VALUES ('1', '2');
+INSERT INTO `module_role` VALUES ('1', '3');
+INSERT INTO `module_role` VALUES ('1', '4');
+INSERT INTO `module_role` VALUES ('2', '1');
+INSERT INTO `module_role` VALUES ('2', '3');
 -- ----------------------------
 -- Records of user
 -- ----------------------------
