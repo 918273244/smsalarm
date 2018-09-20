@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/")
 public class LoginController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(("alarmfile"));
@@ -23,12 +24,12 @@ public class LoginController extends BaseController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/login")
+    @RequestMapping("login")
     public String login(){
         return "userlogin";
     }
 
-    @RequestMapping("/loginUser")
+    @RequestMapping("loginUser")
     public String loginUser(String username, String password, HttpSession session,HttpServletRequest request) {
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
@@ -36,21 +37,21 @@ public class LoginController extends BaseController {
             subject.login(usernamePasswordToken);   //完成登录
             User user = (User) subject.getPrincipal();
             session.setAttribute("user", user);
-            return "redirect:/home";
+            return "redirect:/";
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
         return "userlogin";
     }
 
-    @RequestMapping("/logOut")
+    @RequestMapping("logOut")
     public String logOut(HttpSession session) {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return "userlogin";
     }
 
-    @RequestMapping("/home")
+    @RequestMapping("")
     public String index(){
         return "index";
     }
