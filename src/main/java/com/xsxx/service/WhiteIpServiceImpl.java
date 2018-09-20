@@ -29,6 +29,7 @@ public class WhiteIpServiceImpl implements WhiteIpService , ApplicationListener<
     public void addWhiteIp(WhiteIp whiteIp) throws ServiceException {
         try {
             whiteIpMapper.insert(whiteIp);
+            list.add(whiteIp);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
         }
@@ -84,11 +85,20 @@ public class WhiteIpServiceImpl implements WhiteIpService , ApplicationListener<
 
     @Override
     public void deleteById(Integer id) {
+        List<WhiteIp> whiteIps = new ArrayList<>();
         try {
+            for (WhiteIp w: list) {
+                if(w.getId().intValue() == id.intValue()){
+                    continue;
+                }
+                whiteIps.add(w);
+            }
             whiteIpMapper.delete(id);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
         }
+        list = whiteIps;
+
     }
 
 

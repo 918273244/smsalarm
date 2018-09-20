@@ -32,6 +32,7 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
     public void addPlatform(PlatformInfo platformInfo) {
         try {
             platformInfoMapper.addPlatform(platformInfo);
+            platformInfos.add(platformInfo);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
         }
@@ -40,7 +41,6 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
     @Override
     public List<PlatformInfo> findByPage(int pageNo, int pageSize) {
         try {
-            Thread.sleep(10000);
             List<PlatformInfo> list = new ArrayList<>();
             for (PlatformInfo value : platformInfoMap.values()) {
                 list.add(value);
@@ -87,11 +87,19 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
 
     @Override
     public void deleteById(Integer id) {
+        List<PlatformInfo> platformInfoList = new ArrayList<>();
         try {
+            for (PlatformInfo p: platformInfos) {
+                if(p.getId().intValue() == id.intValue()){
+                    continue;
+                }
+                platformInfoList.add(p);
+            }
             platformInfoMapper.delete(id);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
         }
+        platformInfos  = platformInfoList;
     }
 
 
