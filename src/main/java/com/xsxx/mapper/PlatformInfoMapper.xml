@@ -27,7 +27,7 @@
 		FROM platformInfo WHERE id = #{id,jdbcType=INTEGER}
 	</select>
 
-	<insert id="addPlatform" parameterType="com.xsxx.pojo.PlatformInfo">
+	<insert id="addPlatform" parameterType="com.xsxx.pojo.PlatformInfo" useGeneratedKeys="true" keyProperty="id">
 		insert into platformInfo
 		 (platform_url, alarm_url, pname)
 		 VALUES

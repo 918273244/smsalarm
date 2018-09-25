@@ -90,7 +90,7 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
         List<PlatformInfo> platformInfoList = new ArrayList<>();
         try {
             for (PlatformInfo p: platformInfos) {
-                if(p.getId().intValue() == id.intValue()){
+                if(p.getId() == id.intValue()){
                     continue;
                 }
                 platformInfoList.add(p);

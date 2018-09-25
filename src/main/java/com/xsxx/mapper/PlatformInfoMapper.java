@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PlatformInfoMapper extends BaseMapper<PlatformInfo, Integer>{
 
-    void addPlatform(PlatformInfo platformInfo);
+    int addPlatform(PlatformInfo platformInfo);
 
     Page<PlatformInfo> findByPage();
 

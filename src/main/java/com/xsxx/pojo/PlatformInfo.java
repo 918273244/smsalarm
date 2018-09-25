@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class PlatformInfo implements Serializable {
 
-    private Integer id;
+    private int id;
     //平台连接
     private String platformUrl;
     //检测地址
@@ -14,11 +14,11 @@ public class PlatformInfo implements Serializable {
     //检测状态
     private Integer status;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -146,7 +146,7 @@ public class AlarmTask {
     public void take(){
         if(queue.size()>0){
             String pname = queue.poll();
-            sendWXservice.sendWXmsg(pname,pname,pname);
+//            sendWXservice.sendWXmsg(pname,pname,pname);
             logger.error(pname+" 平台断开");
             try {
                 //睡2秒

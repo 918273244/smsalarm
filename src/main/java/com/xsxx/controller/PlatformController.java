@@ -2,16 +2,20 @@ package com.xsxx.controller;
 
 import com.xsxx.entity.JSONResult;
 import com.xsxx.pojo.PlatformInfo;
-import com.xsxx.pojo.WhiteIp;
+import com.xsxx.pojo.User;
+import com.github.pagehelper.Page;
 import com.xsxx.service.PlatformInfoService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-
+import java.util.UUID;
 /**
  * @Auther: Steven 孙
  * @Date: 2018/9/18 15:38
@@ -25,13 +29,33 @@ public class PlatformController extends BaseController {
     PlatformInfoService platformInfoService;
 
     @RequestMapping("list")
-    public String platformView(){
+    public String platformView(Model model){
+        UUID uuid = UUID.randomUUID();
+        model.addAttribute("uuid", uuid);
+        // 获取当前登录用户的角色
+        User loginUser = getLoginUser();
+        model.addAttribute("user", loginUser);
         return "platform/list";
     }
 
+    /**创建页面*/
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    public String create(){
+        return "platform/edit";
+    }
+
+    /**编辑页面*/
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public String edit(Model model, @ RequestParam("id") Integer id){
+        PlatformInfo platformInfo = platformInfoService.findById(id);
+        model.addAttribute("platformInfo",platformInfo);
+        return "platform/edit";
+    }
+
+
     @RequestMapping("get")
     @ResponseBody
-    public JSONResult get(int pageNo, int pageSize){
+    public JSONResult get(int pageNo ,int pageSize){
         try{
             List<PlatformInfo> list =  platformInfoService.findByPage(pageNo, pageSize);
             return ajaxSuccess(list);
@@ -94,8 +118,10 @@ public class PlatformController extends BaseController {
      * @param id
      * @return
      */
+
     @RequestMapping(value = "delete",method = RequestMethod.POST)
-    public  JSONResult deleteById(Integer id){
+    @ResponseBody
+    public JSONResult deleteById(Integer id){
         try{
             platformInfoService.deleteById(id);
         }catch (Exception e){
