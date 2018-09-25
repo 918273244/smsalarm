@@ -5,17 +5,21 @@
 
 <head>
     <meta charset="utf-8">
-    <title>线上线下服务平台</title>
+    <c:choose>
+        <c:when test="${pageContext.request.serverPort == '8900'}">
+            <title>中国电信短信服务平台 </title>
+        </c:when>
+        <c:otherwise>
+            <title>线上线下服务平台</title>
+        </c:otherwise>
+    </c:choose>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=1200, initial-scale=1">
     <link rel="stylesheet" href="${ctx}static/css/maroco.css">
     <link rel="stylesheet" href="${ctx}static/cloud/home.css">
+    <script src="${ctx}static/maroco.js"></script>
     <%--select2--%>
-    <script src="${ctx}static/js/vendor/jquery.js"></script>
-    <script src="${ctx}static/js/vendor/sea.js"></script>
-    <script src="${ctx}static/js/vendor/seajs-css.js"></script>
-    <script src="${ctx}static/js/vendor/seajs-text.js"></script>
     <link rel="stylesheet" href="${ctx}static/js/vendor/select2/css/select2.min.css">
     <script src="${ctx}static/js/vendor/select2/js/select2.full.min.js"></script>
     <script src="${ctx}static/js/vendor/select2/js/i18n/zh-CN.js"></script>
@@ -29,29 +33,21 @@
         <ul class="tab"></ul>
     </div>
     <!-- profile -->
-    <span href="#" class="xr w5 b pg-avanta" data-dropdown>
-        ${user.username}--<a href="${ctx}logOut" class="menu-error ac-logout"><i class="f f-shutdown"></i>退出</a>
-        <i class="f f-arb"></i>
-    </span>
-
-    <div class="dropdown w5">
-        <ul class="menu dropdown-menu">
-            <li class="devider"></li>
-            <li><a href="${ctx}logOut" class="menu-error ac-logout"><i class="f f-shutdown"></i>退出</a></li>
-        </ul>
-    </div>
-    <span class="b xl home-closepen">
-            <em class="before"></em>
-            <em class="middle"></em>
-            <em class="after"></em>
-        </span>
-    <b class="b xl pg-bdr bi" data-dropdown><i class="f f-arb"></i></b>
+    <a href="${ctx}logOut" class="xr b ac-logout as-logout pg-bdr" title="退出登录">
+        <i class="f f-shutdown"></i>
+    </a>
+    <b class="b xr pg-bdr" data-dropdown><i class="f f-arb"></i></b>
     <ul id="sitemapHome" class="dropdown scroll w10 menu dropdown-menu"></ul>
+    <span class="b xl home-closepen">
+        <em class="before"></em>
+        <em class="middle"></em>
+        <em class="after"></em>
+    </span>
 </div>
 <div id="appbar">
     <div class="tabs">
         <ul class="tab text-center">
-            <li class="x1"><a panel="#app_sms" id="tab_app_sms" title="短信"><i class="f f-msg"></i>短信</a></li>
+            <li class="x1"><a panel="#app_sms" id="tab_app_sms" title="平台"><i class="f f-msg"></i>平台</a></li>
             <li class="x1"><a panel="#app_user" id="tab_app_user" title="用户"><i class="f f-user"></i>用户</a></li>
         </ul>
     </div>
@@ -59,36 +55,32 @@
 <!-- sidebar -->
 <div id="sidebar">
     <div class="brand">
-        <img src="${ctx}static/cloud/img/logo.png">
+        <c:choose>
+            <c:when test="${pageContext.request.serverPort == '8900'}">
+                <img src="${ctx}static/cloud/img/logo-dx.png">
+            </c:when>
+            <c:otherwise>
+                <img src="${ctx}static/cloud/img/logo.png">
+            </c:otherwise>
+        </c:choose>
     </div>
 
     <!-- sms设置  -->
     <ul id="app_sms" class="nav scroll">
         <li>
-            <a class="nav-trigger"><i class="f f-fly"></i>短信发送</a>
+            <a class="nav-trigger"><i class="f f-msg"></i>平台信息</a>
             <ul>
-                    <li><a href="#/websms">短信群发</a></li>
-                    <li>
-                        <hr>
-                    </li>
-                    <li><a href="#/sms/verify"><i class="f f-see"></i>短信审核</a></li>
-                    <li><a href="#/sms/verify/record/todo">批量审核</a></li>
-                    <li><a href="#/sms/verify/record">审核记录</a></li>
-                    <li>
-                        <hr>
-                    </li>
-                    <li><a href="#/template"><i class="f f-unsee"></i>免审模板</a></li>
-                    <li><a href="#/module">通道模板</a></li>
-                    <li><a href="#/template/link">免审链接</a></li>
-                    <li>
-                        <hr>
-                    </li>
-                    <li><a href="#/record"><i class="f f-read"></i>网关记录</a></li>
-                    <li><a href="#/record/mine">我的网关记录</a></li>
+                <li><a href="#/platform/list"><i>✈ </i> 信息管理</a></li>
             </ul>
         </li>
     </ul>
 
+    <!-- 用户设置  -->
+    <ul id="app_user" class="nav scroll">
+
+
+    </ul>
+    <!-- /用户设置  -->
 
 </div>
 <!-- mainbody -->
@@ -101,17 +93,17 @@
         $.fn.select2.defaults.set('language', 'zh-CN');
         //============================crash test=============================
         /*        var checkId = function () {
-                    var ids = {};
-                    $('[id]').each(function (i, o) {
-                        if (ids[o.id]) {
-                            alert('id冲突: ' + o.id);
-                            clearInterval(checkTimmer);
-                        }
-                        ids[o.id] = 1;
-                    });
-                    ids = null;
-                }
-                var checkTimmer = setInterval(checkId, 12345);*/
+         var ids = {};
+         $('[id]').each(function (i, o) {
+         if (ids[o.id]) {
+         alert('id冲突: ' + o.id);
+         clearInterval(checkTimmer);
+         }
+         ids[o.id] = 1;
+         });
+         ids = null;
+         }
+         var checkTimmer = setInterval(checkId, 12345);*/
         //=====================================================================
         var mainbody = $('#mainbody');
         $('body').on('click', 'a.o2olink', function (e) {
@@ -150,22 +142,14 @@
         //缓存导航上的所有链接，用于快速查询当前menu
         navs.links = navs.$('a');
 
-        //顶部导航栏上的事件
-        UI({
-            el: $('#header'),
-            events: {
-                //show/hide left #sidebar
-                'click .home-closepen': function (e, conf) {
-                    $('body').toggleClass('closepen');
-                },
-                //logout
-                'click .ac-logout': function (e, conf) {
-                    if (!confirm('确定要退出登录？')) {
-                        e.preventDefault();
-                    }
-                    APP.modCache.clean();
-                }
+        $(".home-closepen").click(function (e) {
+            $('body').toggleClass('closepen');
+        });
+        $(".ac-logout").click(function (e) {
+            if (!confirm('确定要退出登录？')) {
+                e.preventDefault();
             }
+            APP.modCache.clean();
         });
         //顶部标签页 tabs
         var APP = window.APP = UI.tabs({
@@ -255,12 +239,12 @@
             },
             append: function (obj) {
                 var id = _.uniqueId("tab_"),
-                    title = obj.title || '无标题',
-                    tab = $('<li>' + (obj.block ? '' : '<i class="f f-close ac-close"></i>') + '<a panel="#' + id + '" href="' + obj.url + '" title="' + title + '"><i class="f f-loop ac-fresh" title="刷新本页"></i>' + title + '</a></li>'),
-                    panel = $('<div>', {
-                        id: id,
-                        'class': 'main-container'
-                    }).hide();
+                        title = obj.title || '无标题',
+                        tab = $('<li>' + (obj.block ? '' : '<i class="f f-close ac-close"></i>') + '<a panel="#' + id + '" href="' + obj.url + '" title="' + title + '"><i class="f f-loop ac-fresh" title="刷新本页"></i>' + title + '</a></li>'),
+                        panel = $('<div>', {
+                            id: id,
+                            'class': 'main-container'
+                        }).hide();
                 this.modCache.set(obj);
                 obj.tab = tab.appendTo(this.tabs).find('a').data('url', obj.url)[0];
                 obj.panel = panel.appendTo(mainbody);
@@ -362,8 +346,8 @@
                     tab = $(this.tab);
                 }
                 var pid = tab.attr('panel'),
-                    url = tab[0].hash,
-                    mod = this.modCache.get(url);
+                        url = tab[0].hash,
+                        mod = this.modCache.get(url);
                 if (mod.block) {
                     return;
                 }
@@ -404,7 +388,7 @@
         }
         if (!apppages) {
             apppages = [{
-                title: '控制台',
+                title: "<i class='f f-user'></i> ${user.username }",
                 block: true,
                 active: true,
                 url: '#/home'
