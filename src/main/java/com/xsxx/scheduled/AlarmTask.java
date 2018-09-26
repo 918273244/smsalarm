@@ -53,7 +53,7 @@ public class AlarmTask {
                     List<PlatformInfo> list = platformInfoList.subList(from, Math.min(from + maxSiz, platformInfoList.size()));
                     HttpGet[] urls = new HttpGet[list.size()];
                     for (int i = 0; i < list.size(); i++){
-                        urls[i] = new HttpGet(list.get(i).getPlatformUrl());
+                        urls[i] = new HttpGet(list.get(i).getAlarmUrl());
                     }
                     updateStatus(urls, map);
                     from += maxSiz;
@@ -61,7 +61,7 @@ public class AlarmTask {
             }else{
                 HttpGet[] urls = new HttpGet[platformInfoList.size()];
                 for (int i = 0; i < platformInfoList.size(); i++){
-                    urls[i] = new HttpGet(platformInfoList.get(i).getPlatformUrl());
+                    urls[i] = new HttpGet(platformInfoList.get(i).getAlarmUrl());
                 }
                 updateStatus(urls, map);
             }

@@ -47,7 +47,7 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
             }
             platformInfoMapper.addPlatform(platformInfo);
             platformInfos.add(platformInfo);
-            platformInfoMap.put(platformInfo.getPlatformUrl(), platformInfo);
+            platformInfoMap.put(platformInfo.getAlarmUrl(), platformInfo);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
         }
@@ -96,8 +96,8 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
             //修改的时候如果这条记录存在就删除，避免修改platformUrl引来的bug
             for(PlatformInfo info : platformInfoMap.values()){
                 //platformUrl修改了才删除
-                if (info.getId() == platformInfo.getId() && !info.getPlatformUrl().equals(platformInfo.getPlatformUrl())){
-                    platformInfoMap.remove(info.getPlatformUrl());
+                if (info.getId() == platformInfo.getId() && !info.getAlarmUrl().equals(platformInfo.getAlarmUrl())){
+                    platformInfoMap.remove(info.getAlarmUrl());
                     break;
                 }
             }
@@ -109,7 +109,7 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
             }
             //重新添加对象
             platformInfos.add(platformInfo);
-            platformInfoMap.put(platformInfo.getPlatformUrl(), platformInfo);
+            platformInfoMap.put(platformInfo.getAlarmUrl(), platformInfo);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
         }
@@ -124,7 +124,7 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
     public void deleteById(Integer id) {
         try {
             PlatformInfo platformInfo = platformInfoMapper.findById(id);
-            platformInfoMap.remove(platformInfo.getPlatformUrl());
+            platformInfoMap.remove(platformInfo.getAlarmUrl());
             platformInfoMapper.delete(id);
             for(PlatformInfo p : platformInfos){
                 if(p.getId() == id){
@@ -145,7 +145,7 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
             platformInfos = new CopyOnWriteArrayList<>(lists);
             platformInfoMap = new ConcurrentHashMap<>();
             for (PlatformInfo p:lists) {
-                platformInfoMap.put(p.getPlatformUrl(), p);
+                platformInfoMap.put(p.getAlarmUrl(), p);
             }
         }catch (Exception e){
             logger.error("获取平台列表错误: "+e.getMessage());
