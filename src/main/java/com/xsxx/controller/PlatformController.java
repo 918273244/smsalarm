@@ -1,6 +1,7 @@
 package com.xsxx.controller;
 
 import com.xsxx.entity.JSONResult;
+import com.xsxx.page.BasePage;
 import com.xsxx.pojo.PlatformInfo;
 import com.xsxx.pojo.User;
 import com.github.pagehelper.Page;
@@ -55,9 +56,9 @@ public class PlatformController extends BaseController {
 
     @RequestMapping("get")
     @ResponseBody
-    public JSONResult get(int pageNo ,int pageSize){
+    public JSONResult get(BasePage page){
         try{
-            List<PlatformInfo> list =  platformInfoService.findByPage(pageNo, pageSize);
+            List<PlatformInfo> list =  platformInfoService.findByPage(page.getPage(), page.getCount());
             return ajaxSuccess(list);
         }catch (Exception e){
             return ajaxFail(e.getMessage());
