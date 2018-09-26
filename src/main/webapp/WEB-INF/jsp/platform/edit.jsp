@@ -12,7 +12,7 @@
                         <input name="pname" class="text w8" required>
                     </c:when>
                     <c:otherwise>
-                        <input name="pname"  class="text w8" value="${platformInfo.pname}">
+                        <input name="pname" class="text w8" value="${platformInfo.pname}">
 
                     </c:otherwise>
                 </c:choose>
@@ -27,7 +27,7 @@
                     </c:when>
                     <c:otherwise>
                         <input name="id" type=hidden value="${platformInfo.id}">
-                        <input name="platformUrl"  class="text w8" value="${platformInfo.platformUrl}">
+                        <input name="platformUrl" class="text w8" value="${platformInfo.platformUrl}">
 
                     </c:otherwise>
                 </c:choose>

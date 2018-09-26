@@ -18,7 +18,7 @@
                 ctable.load(fData);
             });
 
-            //toolbar 绑定事件 528863
+            //toolbar 绑定事件
             UI({
                 el: wrap.find(".ac-toolbar"),
                 events: {
@@ -222,12 +222,10 @@
                 height: function (table) {
                     return $(window).height() - table.offset().top;
                 },
-                count: [20, 50, 100, 200],
+                count: [5, 50, 100, 200],
                 url: UI.server + 'platform/get',
                 baseparams: {
-                    countAllRecord: false,
-                    pageNo:1,
-                    pageSize:5
+                    countAllRecord: false
                 }
             });
             function connStatus(record){
