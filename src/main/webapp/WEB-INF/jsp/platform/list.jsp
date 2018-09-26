@@ -87,10 +87,7 @@
             var ctable = table({
                 container: wrap.find(".ac-table"),
                 //列配置,title,width,sortable...
-                cols: [{
-                    title: 'ID',
-                    width: 50
-                }, {
+                cols: [ {
                     title: '名称',
                     width: 200
                 }, {
@@ -209,7 +206,6 @@
                 render: function (records) {
                     return _.map(records, function (record, i) {
                         return [
-                            i+1,
                             record.pname,
                             record.platformUrl,
                             record.alarmUrl,

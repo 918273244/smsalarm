@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class PlatformInfoServiceImpl implements PlatformInfoService  , ApplicationListener<ContextRefreshedEvent> {
@@ -30,7 +31,7 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
     @Autowired
     PlatformInfoMapper platformInfoMapper;
 
-    private List<PlatformInfo> platformInfos;
+    private CopyOnWriteArrayList<PlatformInfo> platformInfos;
     private Map<String, PlatformInfo> platformInfoMap;
 
     @Override
@@ -100,6 +101,14 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
                     break;
                 }
             }
+            //删除原来对象
+            for(PlatformInfo p : platformInfos){
+                if(p.getId() == platformInfo.getId()){
+                    platformInfos.remove(p);
+                }
+            }
+            //重新添加对象
+            platformInfos.add(platformInfo);
             platformInfoMap.put(platformInfo.getPlatformUrl(), platformInfo);
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
@@ -117,6 +126,11 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
             PlatformInfo platformInfo = platformInfoMapper.findById(id);
             platformInfoMap.remove(platformInfo.getPlatformUrl());
             platformInfoMapper.delete(id);
+            for(PlatformInfo p : platformInfos){
+                if(p.getId() == id){
+                    platformInfos.remove(p);
+                }
+            }
 
         }catch (Exception e){
             throw new ServiceException(e.getMessage());
@@ -127,9 +141,10 @@ public class PlatformInfoServiceImpl implements PlatformInfoService  , Applicati
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         try {
-            platformInfos = platformInfoMapper.findByPage();
+            List<PlatformInfo> lists = platformInfoMapper.findByPage();
+            platformInfos = new CopyOnWriteArrayList<>(lists);
             platformInfoMap = new ConcurrentHashMap<>();
-            for (PlatformInfo p:platformInfos) {
+            for (PlatformInfo p:lists) {
                 platformInfoMap.put(p.getPlatformUrl(), p);
             }
         }catch (Exception e){

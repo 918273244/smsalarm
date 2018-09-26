@@ -117,12 +117,7 @@
     </div>
 </div>
 <div class="text-center">
-    <span class="m10"><i class="icon_win8 f f-msg mr"></i>行业短信</span>
-    <span class="m10"><i class="icon_apple f f-chat mr"></i>营销短信</span>
-    <span class="m10"><i class="icon_android f f-water mr"></i>流量派发</span>
-    <span class="m10"><i class="icon_qrcode f f-mic mr"></i>语音消息</span>
 </div>
-<p class="text-center c-gray">2010-2016 © 无锡线上线下网络技术有限公司 苏ICP备1598721号</p>
 </body>
 
 </html>
